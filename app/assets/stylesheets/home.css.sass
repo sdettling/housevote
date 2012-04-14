@@ -1,0 +1,338 @@
+.clearer
+  clear: both
+#moviedetailbg
+  display: none
+  position: absolute
+  z-index: 999
+  width: 100%
+  .content
+    background-color: #fff
+    margin: 0px auto
+    height: 900px
+    width: 980px
+    opacity: 0.7
+#moviedetail
+  display: none
+  position: absolute
+  z-index: 1000
+  width: 100%
+  .content
+    position: relative
+    border: 10px solid #ddd
+    padding: 10px
+    width: 580px
+    height: 330px
+    margin: 102px auto
+    background-color: #fff
+    #detail-close
+      position: absolute
+      top: -10px
+      left: 600px
+      display: block
+      width: 35px
+      height: 30px
+      line-height: 30px
+      text-align: center
+      background-color: #ddd
+      color: #333
+      font-family: Arial
+      text-decoration: none
+      font-size: 20px
+      font-weight: bold
+      &:hover
+        background-color: #333
+        color: #ddd
+    .image
+      float: left
+      margin-right: 10px
+    h3
+      font-size: 24px
+      font-style: italic
+      font-weight: bold
+      margin-bottom: 10px
+    a
+      color: #333
+      margin-bottom: 10px
+    p
+      font-size: 14px
+      line-height: 16px
+      color: #666
+      strong
+        color: #333
+        font-weight: bold
+      &.synopsis
+        position: absolute
+        width: 580px
+        top: 200px
+        left: 10px
+#container
+  font-family: Georgia, "Times New Roman", serif
+  font-size: 12px
+  line-height: 14px
+  color: #666666
+a
+  color: #888
+  text-decoration: underline
+  &:hover
+    color: #000
+p
+  margin-bottom: 10px
+h1
+  font-size: 30px
+  color: #000
+h2
+  color: #333
+  font-style: italic
+  font-size: 20px
+  line-height: 20px
+  margin-bottom: 10px
+
+.pedestal
+  width: 120px
+  height: 178px
+  background-color: #bbb
+  text-align: center
+  position: relative
+  .more-info
+    position: absolute
+    top: 0px
+    right: 0px
+    display: block
+    text-indent: -9999em
+    height: 24px
+    width: 24px
+    background: image_url("info.png")
+
+.movie
+  padding: 10px
+  cursor: move
+#mainContent
+  width: 980px
+  margin: 0px auto
+  #header
+    height: 60px
+    margin: 0px 20px
+    h1
+      line-height: 60px
+  #nav
+    height: 54px
+    margin: 0px 20px
+    position: relative
+    clear: both
+    ul
+      li
+        float: left
+        background-color: #555
+        height: 24px
+        padding: 0px 8px
+        margin-right: 10px
+        a
+          line-height: 24px
+          color: #fff
+          text-decoration: none
+          &:hover
+            text-decoration: underline
+        &.custom
+          display: none
+        &.post
+          display: none
+          background-color: #506695
+    .saving
+      display: none
+      position: absolute
+      top: 0px
+      right: 0px
+      width: 24px
+      height: 24px
+      background: image_url("save.gif")
+  #subtitle
+    display: none
+    margin: 0px 20px 20px 20px
+    height: 22px
+    p
+      line-height: 22px
+      font-size: 14px
+  #login
+    margin: 0px 20px 20px 20px
+    height: 22px
+    #fb-login
+      width: 71px
+      height: 22px
+      display: block
+      text-indent: -9999em
+      background: image_url("login.png")
+      float: left
+      margin-right: 10px
+    p
+      line-height: 22px
+      font-size: 14px
+  #results
+    clear: both
+    display: block
+    width: 940px
+    height: 333px
+    margin: 10px 20px 20px 20px
+    .graph
+      font-size: 10px
+      .y-axis
+        font-family: Arial, Helvetica, sans-serif
+        width: 40px
+        height: 333px
+        float: left
+        .notch
+          border-bottom: 1px solid #999
+          height: 25px
+          line-height: 35px
+          text-align: right
+          padding-right: 3px
+        .sub-notch
+          border-bottom: 1px solid #ccc
+          margin-left: 20px
+          height: 25px
+      .blank-item
+        width: 0px
+        float: left
+        .bar
+          height: 233px
+        .info
+          border-top: 1px solid #999
+          height: 100px
+      .item
+        width: 100px
+        float: left
+        .bar
+          height: 233px
+          position: relative
+          .value
+            width: 50px
+            background-color: #777
+            position: absolute
+            left: 25px
+            bottom: 0px
+        .info
+          border-top: 1px solid #999
+          height: 80px
+          padding: 10px 0px 10px 10px
+          line-height: 11px
+          position: relative
+          .pedestal
+            width: 25px
+            height: 37px
+            float: left
+            margin-right: 7px
+          p.title
+            margin-bottom: 5px
+            color: #333
+          p.score
+            position: absolute
+            top: 60px
+            left: 10px
+            margin-bottom: 0px
+            color: #888
+  #friend-nav
+    display: none
+    margin: 0px 20px 20px 20px
+    position: relative
+    ul
+      height: 24px
+      margin-bottom: 20px
+      li
+        float: left
+        background-color: #555
+        height: 24px
+        padding: 0px 8px
+        margin-right: 10px
+        a
+          line-height: 24px
+          color: #fff
+          text-decoration: none
+          &:hover
+            text-decoration: underline
+  #friend-results
+    display: none
+    margin: 0px 20px 40px 20px
+    position: relative
+    .friend
+      padding: 10px 0px 10px 10px
+      height: 50px
+      &:nth-child(even)
+        background: #ddd
+      ul
+        height: 50px
+        li
+          float: left
+          width: 200px
+          margin-right: 20px
+          .user-image
+            height: 50px
+            width: 50px
+            background-color: #ccc
+            margin-right: 10px
+            float: left
+          .number
+            font-size: 35px
+            font-style: italic
+            float: left
+            width: 50px
+            height: 50px
+            line-height: 25px
+          .image
+            height: 50px
+            width: 34px
+            background-color: #999
+            margin-right: 10px
+            float: left
+
+  #selector
+    position: relative
+    padding-bottom: 20px
+    #selections
+      display: none
+      height: 198px
+      margin: 0px 0px 0px 20px
+      li
+        width: 280px
+        height: 178px
+        padding: 10px
+        background-color: #eeeeee
+        margin: 0px 20px 20px 0px
+        position: relative
+        float: left
+        .pedestal
+          float: left
+          margin-right: 10px
+        .movie
+          position: absolute
+          z-index: 10
+          top: 0px
+          left: 0px
+          width: 280px
+          .pedestal
+            float: left
+          p
+            padding-top: 30px
+    #choices
+      margin: 0px 0px 0px 20px
+      .movie
+        width: 120px
+        height: 217px
+        background-color: #ddd
+        margin: 0px 20px 20px 0px
+        float: left
+        .pedestal
+          margin-bottom: 10px
+        p
+          color: #333
+          margin-bottom: 0px
+    #selections
+      li
+        &.state-highlight
+          background-color: #ffeeaa
+        &.state-hover
+          background-color: #333
+          color: #fff
+          h2
+            color: #fff
+  #footer
+    clear: both
+    margin: 0px 20px 20px 20px

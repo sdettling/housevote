@@ -1,0 +1,9 @@
+Facebook Voter
+================================
+
+This is a ruby on rails voting app designed specifically for the 2012 Academy Awards. Users authenticate themselves with facebook and can then vote for their top 3 choices. Voting is accomplished by dragging movies and dropping them into the top 3 slots. Votes are saved automatically to a postgres db.
+
+Notes
+-----
+
+This is a work in progress. Now that the Oscars have concluded I plan to repurpose for general use.

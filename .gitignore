@@ -1,0 +1,13 @@
+.bundle
+tmp/
+db/*.sqlite3
+config/database.yml
+log/*
+data
+env
+tmp/**/*
+doc/api
+doc/app
+nbproject
+.DS_Store
+public/assets
