@@ -9,11 +9,11 @@
   #mainContent
     #header
       %h1
-        The Academy's Best Pictures of 2011
+        House Voting
     #login
       = link_to "Login", "#", id: "fb-login"
       %p
-        Which of these nominees deserve to win Best Picture at the Oscars this year? Click on the Facebook log in button to vote for your favorites.
+        Which houses would you want to stay in this summer?
     #subtitle
       %p
         Drag the houses around to make your selections.
@@ -42,10 +42,6 @@
       %ul
         %li
           = link_to "Refresh Results", "#", id: "results-refresh"
-        %li.custom
-          = link_to "View Only Watch-A-Thon Results", "#", id: "custom-results-toggle"
-        %li.post
-          = link_to "Post My Top Pick to Facebook", "#", id: "post-story"
     #results
       .graph
         .y-axis
@@ -73,5 +69,3 @@
 
     #footer
       %p
-        This website has no affiliations with The Academy of Motion Picture Arts and Sciences or any other organization. It's just a fun way to see which houses a random sampling of people enjoyed the most this year. Votes on this site have no meaning and do not affect the outcome of the Academy Awards in any way. If you login with your Facebook account on this site we will save your name and your choices after you vote. Developed by
-        = link_to "Stephen Dettling", "http://sdettling.com", target: "_blank"

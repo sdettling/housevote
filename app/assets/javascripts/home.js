@@ -11,11 +11,12 @@ $(document).ready(function() {
   var touchDevice = Modernizr.touch;
   var saving = false;
   var custom = false;
-  var invited = ["19600245","26904108","36400111","36400222","36402585","36405216","36406896","36409763","68302058","508750472","100000313172773","100000645482115","16320868","36400025","36400078","36400272","36400277","36400405","36400913","36401292","36402678","36403066","36403766","36407513","198900007","511794795","617647469","625495213","783068255","1044233749","36400432","553586954","1782894834","36400584","36400937","79201405","592801990","736950829","1157138915","1450489800","100000495870476"];
+  //var invited = ["19600245","26904108","36400111","36400222","36402585","36405216","36406896","36409763","68302058","508750472","100000313172773","100000645482115","16320868","36400025","36400078","36400272","36400277","36400405","36400913","36401292","36402678","36403066","36403766","36407513","198900007","511794795","617647469","625495213","783068255","1044233749","36400432","553586954","1782894834","36400584","36400937","79201405","592801990","736950829","1157138915","1450489800","100000495870476"];
+  var invited = ["36400272","100000645482115","36400913","36403766","36401292","79201405","1044233749","625495213","36400584","36400432","36403066","36409763","617647469","198900007","36400277","36407073","36407513","36402678","36400937","16305798","553586954","8112582","36400078","592801990","100002186524607","100002237553550","509338848","16320868","36400025","36400111","36400222","36400405","36401426","36402585","36405216","36406896","68302058","508750472"];
 
   $.template('house-div', '<div id="${slug}" data-id="${id}" class="house"><div class="pedestal"><a href="#" class="more-info">i</a><img src="/assets/${slug}.jpeg" /></div><p>${name}</p></div>');
   $.template('graph-item', '<div class="item"><div class="bar"><div class="value" style="height: ${barheight}px;"></div></div><div class="info"><div class="pedestal"><img src="/assets/${slug}-s.jpeg" /></div><p class="title">${name}</p><p class="score">${points} points</p></div></div>');
-  $.template('detail', '<div class="image"><img alt="${name}" src="/assets/${slug}.jpeg"></div><h3>${name}</h3><p><strong>Director:</strong> ${director}</p><p><strong>Cast:</strong> ${cast}</p><p><a href="${url1}" target="_blank">Watch the Trailers</a> <a href="${url2}" target="_blank">View on IMDB</a></p><p class="synopsis"><strong>Synopsis:</strong> ${synopsis}</p>');
+  $.template('detail', '<div class="image"><img alt="${name}" src="/assets/${slug}.jpeg"></div><h3>${name}</h3><p><a href="${url}" target="_blank">View on Homeaway</a></p><p class="synopsis"><strong>Description:</strong> ${description}</p>');
   $.template('friend', '<div class="friend"><ul><li><div class="user-image"><img src="${image}" /></div><p>${name}</p></li><li><div class="number">1:</div><div class="image"><img src="/assets/${house1image}-m.jpeg" /></div><p>${house1name}</p></li><li><div class="number">2:</div><div class="image"><img src="/assets/${house2image}-m.jpeg" /></div><p>${house2name}</p></li><li><div class="number">3:</div><div class="image"><img src="/assets/${house3image}-m.jpeg" /></div><p>${house3name}</p></li></ul></div>');
 
   window.fbAsyncInit = function() {
@@ -83,11 +84,6 @@ $(document).ready(function() {
     showFriends();
   });
 
-  $("#post-story").click(function(e) {
-    e.preventDefault();
-    postToFeed();
-  });
-
   $("#results-refresh").click(function(e) {
     e.preventDefault();
     scorehouses(custom);
@@ -147,23 +143,12 @@ $(document).ready(function() {
     FB.api('/me', function(response) {
       fbUserInfo = response;
       if (fbUserInfo['id'] != null) {
-        $.ajax({
-          type: "POST",
-          url: '/users',
-          data: { "user": { "name": fbUserInfo["name"], "email": "", "fbid": fbUserInfo["id"] }},
-          success: function(response) {
-            $("#login").hide();
-            $("#subtitle").show();
-            $("#selections").show();
-            loadUsersVotes();
-            getUserImages();
-            if( $.inArray(fbUserInfo["id"], invited) >= 0 ) {
-              $('#nav li.custom').show();
-            }
-          },
-          error: function(response) {
-            if(response['responseText'] == '{"fbid":["has already been taken"]}')
-            {
+        if (($.inArray(fbUserInfo['id'], invited))>=0 ) {
+          $.ajax({
+            type: "POST",
+            url: '/users',
+            data: { "user": { "name": fbUserInfo["name"], "email": "", "fbid": fbUserInfo["id"] }},
+            success: function(response) {
               $("#login").hide();
               $("#subtitle").show();
               $("#selections").show();
@@ -172,24 +157,27 @@ $(document).ready(function() {
               if( $.inArray(fbUserInfo["id"], invited) >= 0 ) {
                 $('#nav li.custom').show();
               }
+            },
+            error: function(response) {
+              if(response['responseText'] == '{"fbid":["has already been taken"]}')
+              {
+                $("#login").hide();
+                $("#subtitle").show();
+                $("#selections").show();
+                loadUsersVotes();
+                getUserImages();
+                if( $.inArray(fbUserInfo["id"], invited) >= 0 ) {
+                  $('#nav li.custom').show();
+                }
+              }
             }
-          }
-        });
+          });
+        }
+        else {
+          alert ("Sorry dude. You have to be invited to vote.");
+        }
       }
     });
-  }
-
-  function postToFeed() {
-    var firstChoice = $("#"+choices[0]).find('p').html();
-    var obj = {
-      method: 'feed',
-      link: 'http://cinemacelebration.com/',
-      picture: 'http://cinemacelebration.com/assets/'+choices[0]+'.jpeg',
-      name: 'The Academy\'s Best Pictures of 2011',
-      caption: firstChoice+' is my pick for best picture this year.',
-      description: 'Who do you think will take home the Oscar this year? Cast your vote.'
-    };
-    FB.ui(obj);
   }
 
   function generateGraph(houseScores, totalPoints) {
