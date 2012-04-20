@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  slug: MyString
+  url: MyString
+  price: MyString
+  description: MyString
+  created_at: 2012-04-19 12:34:23
+  updated_at: 2012-04-19 12:34:23
+
+two:
+  name: MyString
+  slug: MyString
+  url: MyString
+  price: MyString
+  description: MyString
+  created_at: 2012-04-19 12:34:23
+  updated_at: 2012-04-19 12:34:23

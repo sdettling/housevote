@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120126051927) do
+ActiveRecord::Schema.define(:version => 20120419163423) do
+
+  create_table "houses", :force => true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.string   "url"
+    t.string   "price"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "movies", :force => true do |t|
     t.string   "name"
@@ -19,26 +29,26 @@ ActiveRecord::Schema.define(:version => 20120126051927) do
     t.string   "url1"
     t.string   "url2"
     t.string   "director"
-    t.string   "cast"
-    t.string   "synopsis"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.text     "cast"
+    t.text     "synopsis"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
     t.string   "fbid"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "votes", :force => true do |t|
     t.string   "voter"
     t.integer  "movie"
     t.integer  "rank"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
