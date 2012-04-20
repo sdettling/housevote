@@ -1,5 +1,23 @@
 .clearer
   clear: both
+#save
+  position: absolute
+  top: 60px
+  left: 890px
+  font-size: 14px
+  line-height: 22px
+  height: 22px
+  width: 70px
+  text-align: center
+  background-color: #ffb400
+  color: #000
+  display: none
+  &.success
+    background-color: #008b24
+    color: #fff
+  &.fail
+    background-color: #e41500
+    color: #fff
 #housedetailbg
   display: none
   position: absolute
@@ -21,7 +39,7 @@
     border: 10px solid #ddd
     padding: 10px
     width: 580px
-    height: 330px
+    height: 200px
     margin: 102px auto
     background-color: #fff
     #detail-close
@@ -63,7 +81,7 @@
       &.synopsis
         position: absolute
         width: 580px
-        top: 200px
+        top: 110px
         left: 10px
 #container
   font-family: Georgia, "Times New Roman", serif
@@ -109,6 +127,7 @@ h2
 #mainContent
   width: 980px
   margin: 0px auto
+  position: relative
   #header
     height: 60px
     margin: 0px 20px
