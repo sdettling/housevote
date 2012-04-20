@@ -1,4 +1,4 @@
-class MoviesController < ApplicationController
+class HousesController < ApplicationController
   def index
     @houses = House.all
     respond_to do |format|
