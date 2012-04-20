@@ -1,10 +1,10 @@
 $(document).ready(function() {
-  var movies = null;
+  var houses = null;
   var users = null;
   var votes = null;
   var fbUserInfo = null;
   var fbFriends = null;
-  var touchMovies = new Array();
+  var touchHouses = new Array();
   var choices = new Array("","","");
   var chosenIDs = new Array("","","");
   var $selections = $( "#selections" );
@@ -13,15 +13,15 @@ $(document).ready(function() {
   var custom = false;
   var invited = ["19600245","26904108","36400111","36400222","36402585","36405216","36406896","36409763","68302058","508750472","100000313172773","100000645482115","16320868","36400025","36400078","36400272","36400277","36400405","36400913","36401292","36402678","36403066","36403766","36407513","198900007","511794795","617647469","625495213","783068255","1044233749","36400432","553586954","1782894834","36400584","36400937","79201405","592801990","736950829","1157138915","1450489800","100000495870476"];
 
-  $.template('movie-div', '<div id="${slug}" data-id="${id}" class="movie"><div class="pedestal"><a href="#" class="more-info">i</a><img src="/assets/${slug}.jpeg" /></div><p>${name}</p></div>');
+  $.template('house-div', '<div id="${slug}" data-id="${id}" class="house"><div class="pedestal"><a href="#" class="more-info">i</a><img src="/assets/${slug}.jpeg" /></div><p>${name}</p></div>');
   $.template('graph-item', '<div class="item"><div class="bar"><div class="value" style="height: ${barheight}px;"></div></div><div class="info"><div class="pedestal"><img src="/assets/${slug}-s.jpeg" /></div><p class="title">${name}</p><p class="score">${points} points</p></div></div>');
   $.template('detail', '<div class="image"><img alt="${name}" src="/assets/${slug}.jpeg"></div><h3>${name}</h3><p><strong>Director:</strong> ${director}</p><p><strong>Cast:</strong> ${cast}</p><p><a href="${url1}" target="_blank">Watch the Trailers</a> <a href="${url2}" target="_blank">View on IMDB</a></p><p class="synopsis"><strong>Synopsis:</strong> ${synopsis}</p>');
-  $.template('friend', '<div class="friend"><ul><li><div class="user-image"><img src="${image}" /></div><p>${name}</p></li><li><div class="number">1:</div><div class="image"><img src="/assets/${movie1image}-m.jpeg" /></div><p>${movie1name}</p></li><li><div class="number">2:</div><div class="image"><img src="/assets/${movie2image}-m.jpeg" /></div><p>${movie2name}</p></li><li><div class="number">3:</div><div class="image"><img src="/assets/${movie3image}-m.jpeg" /></div><p>${movie3name}</p></li></ul></div>');
+  $.template('friend', '<div class="friend"><ul><li><div class="user-image"><img src="${image}" /></div><p>${name}</p></li><li><div class="number">1:</div><div class="image"><img src="/assets/${house1image}-m.jpeg" /></div><p>${house1name}</p></li><li><div class="number">2:</div><div class="image"><img src="/assets/${house2image}-m.jpeg" /></div><p>${house2name}</p></li><li><div class="number">3:</div><div class="image"><img src="/assets/${house3image}-m.jpeg" /></div><p>${house3name}</p></li></ul></div>');
 
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '248504555218072', // App ID
-      channelUrl : '//celebratecinema.com/channel.html', // Channel File
+      appId      : '222461704520648', // App ID
+      channelUrl : '//schmettling.com/channel.html', // Channel File
       status     : true, // check login status
       cookie     : true, // enable cookies to allow the server to access the session
       xfbml      : true  // parse XFBML
@@ -42,18 +42,18 @@ $(document).ready(function() {
   };
 
 
-  //get the list of movies and populate them
+  //get the list of houses and populate them
   $.ajax({
-    url: '/movies',
+    url: '/houses',
     success: function( data ) {
-      movies = data;
-      $.each( movies, function(i, movie){
-         $.tmpl("movie-div", movie).insertBefore("#choices .clearer");
+      houses = data;
+      $.each( houses, function(i, house){
+         $.tmpl("house-div", house).insertBefore("#choices .clearer");
       });
-      scoreMovies(custom);
-      $(".movie .more-info").click(function(e) {
+      scorehouses(custom);
+      $(".house .more-info").click(function(e) {
         e.preventDefault();
-        openMovieDetail($(this).parents('.movie')[0].id);
+        openhouseDetail($(this).parents('.house')[0].id);
       });
       //setupSelector();
     }
@@ -90,12 +90,12 @@ $(document).ready(function() {
 
   $("#results-refresh").click(function(e) {
     e.preventDefault();
-    scoreMovies(custom);
+    scorehouses(custom);
   });
 
   $("#detail-close").click(function(e){
     e.preventDefault();
-    closeMovieDetail();
+    closehouseDetail();
   });
 
   $("#custom-results-toggle").click(function(e) {
@@ -107,7 +107,7 @@ $(document).ready(function() {
     else {
       $(this).html("View Only Watch-A-Thon Results");
     }
-    scoreMovies(custom);
+    scorehouses(custom);
   });
 
   $("#fb-login").click(function(e) {
@@ -128,19 +128,19 @@ $(document).ready(function() {
     });
   });
 
-  function openMovieDetail(slug){
-    $.each( movies, function(i, movie){
-      if(movie['slug'] == slug) {
+  function openhouseDetail(slug){
+    $.each( houses, function(i, house){
+      if(house['slug'] == slug) {
         $("#detail-template").html("");
-        $.tmpl("detail", movie).appendTo("#detail-template");
+        $.tmpl("detail", house).appendTo("#detail-template");
       }
     });
-    $('#moviedetailbg').show();
-    $('#moviedetail').show();
+    $('#housedetailbg').show();
+    $('#housedetail').show();
   }
-  function closeMovieDetail(){
-    $('#moviedetailbg').hide();
-    $('#moviedetail').hide();
+  function closehouseDetail(){
+    $('#housedetailbg').hide();
+    $('#housedetail').hide();
   }
 
   function initializeUser() {
@@ -192,11 +192,11 @@ $(document).ready(function() {
     FB.ui(obj);
   }
 
-  function generateGraph(movieScores, totalPoints) {
+  function generateGraph(houseScores, totalPoints) {
     $('.graph .item').remove();
-    $.each( movieScores, function(i, movie){
-      var height = (movie['points']/totalPoints)*208;
-      $.tmpl("graph-item", {"barheight": height, "slug": movie['slug'], "name": movie['name'], "points": movie['points'] }).appendTo(".graph");
+    $.each( houseScores, function(i, house){
+      var height = (house['points']/totalPoints)*208;
+      $.tmpl("graph-item", {"barheight": height, "slug": house['slug'], "name": house['name'], "points": house['points'] }).appendTo(".graph");
     });
   }
 
@@ -224,27 +224,27 @@ $(document).ready(function() {
         if(user['fbid'] == friend['uid']) {
           numFriends += 1;
           if (user['fbid'] == "36400913") {
-            var userInfo = {"image": user['image'], "name": user['name'], "movie1image": "leprechaun-in-the-hood", "movie1name": "Leprechaun in the Hood", "movie2image": "leprechaun-in-the-hood", "movie2name": "Leprechaun in the Hood", "movie3image": "leprechaun-in-the-hood", "movie3name": "Leprechaun in the Hood"}
+            var userInfo = {"image": user['image'], "name": user['name'], "house1image": "leprechaun-in-the-hood", "house1name": "Leprechaun in the Hood", "house2image": "leprechaun-in-the-hood", "house2name": "Leprechaun in the Hood", "house3image": "leprechaun-in-the-hood", "house3name": "Leprechaun in the Hood"}
           }
           else {
-            var userInfo = {"image": user['image'], "name": user['name'], "movie1image": "blank", "movie1name": "", "movie2image": "blank", "movie2name": "", "movie3image": "blank", "movie3name": ""}
+            var userInfo = {"image": user['image'], "name": user['name'], "house1image": "blank", "house1name": "", "house2image": "blank", "house2name": "", "house3image": "blank", "house3name": ""}
             $.each( votes, function(j, vote){
               if(vote['voter'] == user['fbid']) {
-                $.each( movies, function(k, movie){
-                  if(vote['movie'] == movie['id'])
+                $.each( houses, function(k, house){
+                  if(vote['house'] == house['id'])
                   {
-                    if (vote['movie'] != null) {
+                    if (vote['house'] != null) {
                       if (vote['rank'] == 1){
-                        userInfo['movie1image'] = movie['slug'];
-                        userInfo['movie1name'] = movie['name'];
+                        userInfo['house1image'] = house['slug'];
+                        userInfo['house1name'] = house['name'];
                       }
                       else if(vote['rank'] == 2){
-                        userInfo['movie2image'] = movie['slug'];
-                        userInfo['movie2name'] = movie['name'];
+                        userInfo['house2image'] = house['slug'];
+                        userInfo['house2name'] = house['name'];
                       }
                       else if(vote['rank'] == 3){
-                        userInfo['movie3image'] = movie['slug'];
-                        userInfo['movie3name'] = movie['name'];
+                        userInfo['house3image'] = house['slug'];
+                        userInfo['house3name'] = house['name'];
                       }
                     }
                   }
@@ -262,36 +262,36 @@ $(document).ready(function() {
     $("#friend-results").show();
   }
 
-  function scoreMovies(custom) {
+  function scorehouses(custom) {
     $.ajax({
       url: '/votes',
       success: function( data ) {
         votes = data;
         var totalPoints = 0;
-        var movieScores = [];
+        var houseScores = [];
         var customPoints = 0;
         var customScores = [];
-        $.each( movies, function(i, movie){
-          var movieCount = 0;
+        $.each( houses, function(i, house){
+          var houseCount = 0;
           var customCount = 0;
           $.each( votes, function(j, vote){
-            if(vote['movie'] == movie['id']) {
-              if(vote['rank'] == 3) { movieCount += 1; }
-              else if(vote['rank'] == 2) { movieCount += 2; }
-              else if(vote['rank'] == 1) { movieCount += 3; }
+            if(vote['house'] == house['id']) {
+              if(vote['rank'] == 3) { houseCount += 1; }
+              else if(vote['rank'] == 2) { houseCount += 2; }
+              else if(vote['rank'] == 1) { houseCount += 3; }
             }
-            if(  (vote['movie'] == movie['id'])&&(($.inArray(vote['voter'], invited))>=0 )  ) {
+            if(  (vote['house'] == house['id'])&&(($.inArray(vote['voter'], invited))>=0 )  ) {
               if(vote['rank'] == 3) { customCount += 1; }
               else if(vote['rank'] == 2) { customCount += 2; }
               else if(vote['rank'] == 1) { customCount += 3; }
             }
           });
-          totalPoints += movieCount;
+          totalPoints += houseCount;
           customPoints += customCount;
-          movieScores.push( {"slug": movie['slug'], "name": movie['name'], "points": movieCount} );
-          customScores.push( {"slug": movie['slug'], "name": movie['name'], "points": customCount} );
+          houseScores.push( {"slug": house['slug'], "name": house['name'], "points": houseCount} );
+          customScores.push( {"slug": house['slug'], "name": house['name'], "points": customCount} );
         });
-        movieScores.sort(function(a, b){
+        houseScores.sort(function(a, b){
           return b.points-a.points
         });
         customScores.sort(function(a, b){
@@ -302,7 +302,7 @@ $(document).ready(function() {
           generateGraph(customScores, customPoints);
         }
         else {
-          generateGraph(movieScores, totalPoints);
+          generateGraph(houseScores, totalPoints);
         }
       }
     });
@@ -312,11 +312,11 @@ $(document).ready(function() {
     $.each( votes, function(i, vote){
       if(vote['voter'] == fbUserInfo['id'])
       {
-        chosenIDs[((vote['rank'])-1)] = vote['movie'];
-        $.each( movies, function(j, movie){
-          if(vote['movie'] == movie['id'])
+        chosenIDs[((vote['rank'])-1)] = vote['house'];
+        $.each( houses, function(j, house){
+          if(vote['house'] == house['id'])
           {
-            choices[((vote['rank'])-1)] = movie['slug'];
+            choices[((vote['rank'])-1)] = house['slug'];
           }
         });
       }
@@ -361,16 +361,16 @@ $(document).ready(function() {
     else{
       $choices = $( "#choices" );
 
-      //make movies draggable
-      $( ".movie" ).draggable({
+      //make houses draggable
+      $( ".house" ).draggable({
         revert: "invalid",
         helper: "clone",
         cursor: "move"
       });
 
-      //allow movies to be dropped into rankings
+      //allow houses to be dropped into rankings
       $( "li", $selections ).droppable({
-        accept: ".movie",
+        accept: ".house",
         activeClass: "state-highlight",
         hoverClass: "state-hover",
         drop: function( event, ui ) {
@@ -378,9 +378,9 @@ $(document).ready(function() {
         }
       });
 
-      //allow movies to be dropped back into the list for removal
+      //allow houses to be dropped back into the list for removal
       $choices.droppable({
-        accept: "#selections .movie",
+        accept: "#selections .house",
         activeClass: "custom-state-active",
         drop: function( event, ui ) {
           removeSelection( ui.draggable );
@@ -399,7 +399,7 @@ $(document).ready(function() {
         success: function() {
           saving = false;
           //$(".saving").hide();
-          scoreMovies(custom);
+          scorehouses(custom);
         }
       });
     }
@@ -425,8 +425,8 @@ $(document).ready(function() {
   
   function createTouchDraggables() {
     if(touchDevice){
-      $.each(movies, function(i, movie){
-        touchMovies.push( new webkit_draggable(movie['slug'], {revert : true, scroll : true, onStart : function(){ $('#selections li').addClass('state-highlight'); }, onEnd : function(){ $('#selections li').removeClass('state-highlight'); } } ) );
+      $.each(houses, function(i, house){
+        touchhouses.push( new webkit_draggable(house['slug'], {revert : true, scroll : true, onStart : function(){ $('#selections li').addClass('state-highlight'); }, onEnd : function(){ $('#selections li').removeClass('state-highlight'); } } ) );
       });
     }
   }
@@ -435,27 +435,27 @@ $(document).ready(function() {
     if (!saving) {
       saving = true;
       if(touchDevice){
-        $.each(touchMovies, function(i, movie){
-          movie.destroy();
+        $.each(touchhouses, function(i, house){
+          house.destroy();
         });
         
-        var movieName = $item.id;
+        var houseName = $item.id;
         var choiceNumber = $choice.id.replace("vote", "");
-        $item = $("#"+movieName);
+        $item = $("#"+houseName);
         $choice = $("#vote"+choiceNumber);
       }
       else {
-        var movieName = $item[0].id;
+        var houseName = $item[0].id;
         var choiceNumber = $choice[0].id.replace("vote", "");
       }
-      var existingMovie = choices[(choiceNumber-1)];
-      var droppedArrayPos = $.inArray(movieName, choices);
-      var existingArrayPos = $.inArray(existingMovie, choices);
+      var existinghouse = choices[(choiceNumber-1)];
+      var droppedArrayPos = $.inArray(houseName, choices);
+      var existingArrayPos = $.inArray(existinghouse, choices);
       
       if(choiceNumber == 1){
         $('#nav li.post').show();
       }
-      if (existingMovie == "") {
+      if (existinghouse == "") {
         $item.fadeOut('fast',function() {
           $item
             .appendTo( $choice )
@@ -467,13 +467,13 @@ $(document).ready(function() {
         if( droppedArrayPos > -1 ){
           choices[droppedArrayPos] = "";
         }
-        choices[(choiceNumber-1)] = movieName;
-        chosenIDs[(choiceNumber-1)] = $("#"+movieName).attr("data-id");
+        choices[(choiceNumber-1)] = houseName;
+        chosenIDs[(choiceNumber-1)] = $("#"+houseName).attr("data-id");
       }
-      else if (existingMovie != "")
+      else if (existinghouse != "")
       {
-        var $oldItem = $("#"+existingMovie);
-        if ((existingMovie != movieName)&&( droppedArrayPos > -1 ))
+        var $oldItem = $("#"+existinghouse);
+        if ((existinghouse != houseName)&&( droppedArrayPos > -1 ))
         {
           $oldItem.fadeOut('fast',function() {
             $oldItem
@@ -487,10 +487,10 @@ $(document).ready(function() {
                 createTouchDraggables();
               });
           });
-          choices[droppedArrayPos] = existingMovie;
-          choices[existingArrayPos] = movieName;
-          chosenIDs[droppedArrayPos] = $("#"+existingMovie).attr("data-id");
-          chosenIDs[existingArrayPos] = $("#"+movieName).attr("data-id");
+          choices[droppedArrayPos] = existinghouse;
+          choices[existingArrayPos] = houseName;
+          chosenIDs[droppedArrayPos] = $("#"+existinghouse).attr("data-id");
+          chosenIDs[existingArrayPos] = $("#"+houseName).attr("data-id");
         }
         else
         {
@@ -509,8 +509,8 @@ $(document).ready(function() {
                 createTouchDraggables();
               });
           });
-          choices[(choiceNumber-1)] = movieName;
-          chosenIDs[(choiceNumber-1)] = $("#"+movieName).attr("data-id");
+          choices[(choiceNumber-1)] = houseName;
+          chosenIDs[(choiceNumber-1)] = $("#"+houseName).attr("data-id");
         }
       }
       if(touchDevice){

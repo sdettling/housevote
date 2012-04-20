@@ -1,5 +1,6 @@
 FacebookVoter::Application.routes.draw do
   resources :movies
+  resources :houses
   resources :users
   resources :votes
 
