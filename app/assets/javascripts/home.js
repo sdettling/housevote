@@ -16,7 +16,7 @@ $(document).ready(function() {
 
   $.template('house-div', '<div id="${slug}" data-id="${id}" class="house"><div class="pedestal"><a href="#" class="more-info">i</a><img src="/assets/${slug}.jpeg" /></div><p>${name}</p></div>');
   $.template('graph-item', '<div class="item"><div class="bar"><div class="value" style="height: ${barheight}px;"></div></div><div class="info"><div class="pedestal"><img src="/assets/${slug}-s.jpeg" /></div><p class="title">${name}</p><p class="score">${points} points</p></div></div>');
-  $.template('detail', '<div class="image"><img alt="${name}" src="/assets/${slug}.jpeg"></div><h3>${name}</h3><p><a href="${url}" target="_blank">View on Homeaway</a></p><p class="synopsis"><strong>Description:</strong> ${description}</p>');
+  $.template('detail', '<div class="image"><img alt="${name}" src="/assets/${slug}.jpeg"></div><h3>${name}</h3><p>Price: ${price}</p><p><a href="${url}" target="_blank">View on Homeaway</a></p><p class="synopsis"><strong>Description:</strong> ${description}</p>');
   $.template('friend', '<div class="friend"><ul><li><div class="user-image"><img src="${image}" /></div><p>${name}</p></li><li><div class="number">1:</div><div class="image"><img src="/assets/${house1image}-m.jpeg" /></div><p>${house1name}</p></li><li><div class="number">2:</div><div class="image"><img src="/assets/${house2image}-m.jpeg" /></div><p>${house2name}</p></li><li><div class="number">3:</div><div class="image"><img src="/assets/${house3image}-m.jpeg" /></div><p>${house3name}</p></li></ul></div>');
 
   window.fbAsyncInit = function() {
